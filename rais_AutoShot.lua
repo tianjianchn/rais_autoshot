@@ -174,6 +174,15 @@ local function Aimed_Start()
 			castTime_Aimed = castTime_Aimed/1.4
 		end
 		if UnitBuff("player",i) == "Interface\\Icons\\Racial_Troll_Berserk" then
+            pHealth = UnitHealth("player");
+            maxHealth = UnitHealthMax("player");
+            percentHealth = pHealth / maxHealth;
+            if(percentHealth >= 0.40) then
+                berserkValue = (1.30 - percentHealth)/3;
+            else
+                berserkValue = 0.30;
+            end
+            DEFAULT_CHAT_FRAME:AddMessage("Berserk Speed: "..berserkValue, 1, 0, 0 );
 			castTime_Aimed = castTime_Aimed/ (1 + berserkValue)
 		end
 		if UnitBuff("player",i) == "Interface\\Icons\\Inv_Trinket_Naxxramas04" then
@@ -309,10 +318,13 @@ Frame:SetScript("OnEvent",function()
 		for i=1,16 do
 			if ( UnitBuff("player",i) == "Interface\\Icons\\Racial_Troll_Berserk" ) then
 				if ( berserkValue == false ) then
-					if((UnitHealth("player")/UnitHealthMax("player")) >= 0.40) then
-						berserkValue = (1.30 - (UnitHealth("player")/UnitHealthMax("player")))/3
+                    pHealth = UnitHealth("player");
+                    maxHealth = UnitHealthMax("player");
+                    percentHealth = pHealth / maxHealth;
+					if(percentHealth >= 0.40) then
+						berserkValue = (1.30 - percentHealth)/3;
 					else
-						berserkValue = 0.30
+						berserkValue = 0.30;
 					end
 				end
 			else
